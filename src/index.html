@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="output.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Memo</title>
+  </head>
+  <body>
+    <main>
+      <header
+        class="bg-background w-full h-screen flex font-Roboto text-center flex-col"
+      >
+        <h1 class="animate-bounce text-title font-bold text-8xl mt-10 m-auto">
+          Memo
+        </h1>
+        <div class="header-container flex w-full h-full">
+          <div class="memoParrent w-1/2 flex justify-center items-center">
+            <form
+              action=""
+              class="memoForm flex flex-col justify-center items-center gap-10 border-4 border-lightBlue-200 p-8 rounded-2xl"
+            >
+              <input
+                class="memoTitle w-52 h-12 text-center rounded-2xl bg-lightBlue-100"
+                type="text"
+                name="memoTitle"
+                placeholder="Memo title"
+              />
+              <textarea
+                class="w-80 h-52 text-center rounded-3xl bg-lightBlue-100"
+                name="memoContent"
+                placeholder="Enter your memo"
+                maxlength="500"
+              ></textarea>
+              <input
+                class="w-40 h-16 bg-lightBlue-200 hover:bg-lightBlue-300 text-white font-bold rounded-2xl focus:outline-none focus:shadow-outline transition-all duration-300"
+                type="submit"
+                value="Add"
+              />
+            </form>
+          </div>
+          <div
+            class="memoContainer w-1/2 flex flex-col h-[450px] gap-8 rounded-3xl mt-28 items-center overflow-x-hidden overflow-y-auto mb-20 mr-10"
+          ></div>
+        </div>
+      </header>
+    </main>
+    <script src="js/app.js"></script>
+  </body>
+</html>

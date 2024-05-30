@@ -1,21 +1,52 @@
 let memoContainer = document.querySelector(".memoContainer");
 let memoForm = document.querySelector(".memoForm");
-let memos = [];
+let memos = JSON.parse(localStorage.getItem("memos")) || [];
+function toggleMemoContainerVisibility() {
+  if (memos.length > 0) {
+    memoContainer.classList.remove("hidden");
+    memoContainer.classList.add("flex");
+  } else {
+    memoContainer.classList.add("hidden");
+    memoContainer.classList.remove("flex");
+  }
+}
+toggleMemoContainerVisibility();
 memoForm.addEventListener("submit", (e) => {
+  e.preventDefault();
   let newMemo = {
     title: e.target.memoTitle.value,
     content: e.target.memoContent.value,
-    id: Math.random(),
+    isItImportant: false,
+    id: makeId(),
   };
   e.target.memoTitle.value = "";
   e.target.memoContent.value = "";
   memos.push(newMemo);
-  showMemosInUI(memos);
-  e.preventDefault();
+  localStorage.setItem("memos", JSON.stringify(memos));
+  toggleMemoContainerVisibility();
+  showMemosInUI();
 });
-function showMemosInUI(memosList) {
+memoContainer.addEventListener("click", (e) => {
+  let id = e.target.getAttribute("data-id");
+  if (e.target.classList.contains("deleteBtn")) {
+    memos = memos.filter((memo) => memo.id !== id);
+    localStorage.setItem("memos", JSON.stringify(memos));
+    toggleMemoContainerVisibility();
+    showMemosInUI();
+  } else if (e.target.classList.contains("checkBtn")) {
+    memos.forEach((memo) => {
+      if (memo.id === id) {
+        memo.isItImportant = !memo.isItImportant;
+      }
+    });
+    memos.sort((a, b) => b.isItImportant - a.isItImportant);
+    localStorage.setItem("memos", JSON.stringify(memos));
+    showMemosInUI();
+  }
+});
+function showMemosInUI() {
   memoContainer.innerHTML = "";
-  memosList.forEach((item) => {
+  memos.forEach((memo) => {
     let memoBox = document.createElement("div");
     memoBox.classList.add(
       "memoBox",
@@ -30,83 +61,28 @@ function showMemosInUI(memosList) {
       "border-themePurple-200",
       "rounded-2xl"
     );
-    let head = document.createElement("div");
-    head.classList.add("head", "flex", "w-full", "gap-12");
-    memoBox.setAttribute("id", `${item.id}`);
-    let btnBox = document.createElement("div");
-    let headTitle = document.createElement("div");
-    headTitle.classList.add(
-      "w-48",
-      "h-48",
-      "flex",
-      "p-8",
-      "items-center",
-      "border-4",
-      "border-lightBlue-200",
-      "rounded-2xl"
-    );
-    btnBox.classList.add(
-      "btnBox",
-      "w-28",
-      "flex",
-      "justify-end",
-      "items-center",
-      "gap-8"
-    );
-    let deleteBtn = document.createElement("i");
-    deleteBtn.classList.add(
-      "fa-solid",
-      "fa-trash",
-      "bg-red-500",
-      "w-8",
-      "h-8",
-      "flex",
-      "pt-2",
-      "text-white",
-      "rounded-xl",
-      "hover:bg-white",
-      "hover:text-red-500",
-      "transition-all",
-      "duration-200"
-    );
-    let checkBtn = document.createElement("i");
-    checkBtn.classList.add(
-      "fa-solid",
-      "fa-check",
-      "bg-green-500",
-      "w-8",
-      "h-8",
-      "flex",
-      "pt-2",
-      "text-white",
-      "rounded-xl",
-      "hover:bg-white",
-      "hover:text-green-500",
-      "transition-all",
-      "duration-200"
-    );
-    let memoText = document.createElement("div");
-    memoText.classList.add(
-      "memoText",
-      "text-center",
-      "w-full",
-      "text-transparent",
-      "bg-clip-text",
-      "bg-gradient-to-r",
-      "from-text",
-      "to-themePurple-300",
-      "text-2xl",
-      "font-medium",
-      "max-h-96"
-    );
-    memoText.innerHTML = `${item.content}`;
-    headTitle.innerHTML = `<h3 class="memoTitle text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-lightBlue-300 to-themePurple-300 mr-12">${item.title}</h3>`;
-    head.appendChild(headTitle);
-    head.appendChild(btnBox);
-    btnBox.appendChild(deleteBtn);
-    btnBox.appendChild(checkBtn);
-    memoBox.appendChild(head);
-    memoBox.appendChild(memoText);
+    memoBox.innerHTML = `
+        <div class="head flex w-full gap-12">
+          <div class="w-48 h-48 flex p-8 items-center border-4 border-lightBlue-200 rounded-2xl">
+            <h3 class="memoTitle text-4xl font-black text-blue-200 mr-12">${memo.title}</h3>
+          </div>
+          <div class="btnBox w-28 flex justify-end items-center gap-8">
+            <i class="fa-solid fa-trash bg-red-500 w-8 h-8 text-center pt-2 text-white rounded-xl hover:bg-white hover:text-red-500 transition-all duration-200 deleteBtn" data-id="${memo.id}"></i>
+            <i class="fa-solid fa-star bg-yellow-300 w-8 h-8 text-center pt-2 text-white rounded-xl hover:bg-white hover:text-yellow-300 transition-all duration-200 checkBtn" data-id="${memo.id}"></i>
+          </div>
+        </div>
+        <div class="memoText text-center w-full text-2xl font-bold">
+          ${memo.content}
+        </div>
+      `;
     memoContainer.appendChild(memoBox);
   });
 }
+function makeId() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+showMemosInUI();

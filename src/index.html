@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="output.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,43 +16,39 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+    <link rel="icon" type="image/x-icon" href="../image/icon.png" />
+    <link rel="stylesheet" href="input.css" />
     <title>Memo</title>
   </head>
-  <body>
+  <body class="bg-gradient-to-r from-purple-400 to-blue-500">
     <main>
-      <header
-        class="bg-background w-full h-screen flex font-Roboto text-center flex-col"
-      >
-        <h1 class="animate-bounce text-title font-bold text-8xl mt-10 m-auto">
-          Memo
-        </h1>
-        <div class="header-container flex w-full h-full">
-          <div class="memoParrent w-1/2 flex justify-center items-center">
-            <form
-              action=""
-              class="memoForm flex flex-col justify-center items-center gap-10 border-4 border-lightBlue-200 p-8 rounded-2xl"
-            >
-              <input
-                class="memoTitle w-52 h-12 text-center rounded-2xl bg-lightBlue-100"
-                type="text"
-                name="memoTitle"
-                placeholder="Memo title"
-              />
-              <textarea
-                class="w-80 h-52 text-center rounded-3xl bg-lightBlue-100"
-                name="memoContent"
-                placeholder="Enter your memo"
-                maxlength="500"
-              ></textarea>
-              <input
-                class="w-40 h-16 bg-lightBlue-200 hover:bg-lightBlue-300 text-white font-bold rounded-2xl focus:outline-none focus:shadow-outline transition-all duration-300"
-                type="submit"
-                value="Add"
-              />
-            </form>
-          </div>
+      <header class="h-screen flex flex-col justify-center items-center">
+        <h1 class="text-6xl font-bold text-white mb-10 animate-pulse">Memo</h1>
+        <div class="header-container flex justify-center items-center gap-64">
+          <form
+            action=""
+            class="memoForm flex flex-col gap-4 bg-white p-10 rounded-lg shadow-lg"
+          >
+            <input
+              class="memoTitle w-72 h-12 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+              type="text"
+              name="memoTitle"
+              placeholder="Memo title"
+            />
+            <textarea
+              class="w-72 h-40 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+              name="memoContent"
+              placeholder="Enter your memo"
+              maxlength="500"
+            ></textarea>
+            <input
+              type="submit"
+              class="w-32 h-12 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-300"
+              value="Add"
+            />
+          </form>
           <div
-            class="memoContainer w-1/2 flex flex-col h-[450px] gap-8 rounded-3xl mt-28 items-center overflow-x-hidden overflow-y-auto mb-20 mr-10"
+            class="memoContainer flex-col bg-transparent p-4 rounded-lg shadow-lg max-h-96 overflow-auto gap-10"
           ></div>
         </div>
       </header>
